@@ -1,0 +1,14 @@
+﻿<div class="left-sidebar">
+    <h2 class="title">Danh Mục</h2>
+    <div class="accordion" id="managerCategory">
+        <div class="accordion-item">
+            @Html.Action("_ModLeftSideBarCategoryPartial", new { name = "Đơn Hàng", type = "Cart" })
+            @Html.Action("_ModLeftSideBarCategoryPartial", new { name = "Khách Hàng", type = "Customer" })
+            @Html.Action("_ModLeftSideBarCategoryPartial", new { name = "Sách", type = "Book" })
+            @Html.Action("_ModLeftSideBarCategoryPartial", new { name = "NXB", type = "Publisher" })
+            @Html.Action("_ModLeftSideBarCategoryPartial", new { name = "Thể Loại", type = "Genre" })
+            @Html.Action("_ModLeftSideBarCategoryPartial", new { name = "Tác Giả", type = "Author" })
+            @Html.Action("_ModLeftSideBarCategoryPartial", new { name = "Khuyến Mãi", type = "Promotion" })
+        </div>
+    </div>
+</div>

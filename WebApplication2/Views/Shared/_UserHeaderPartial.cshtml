@@ -1,0 +1,67 @@
+﻿@if (Session["UserName"] == null)
+{
+    <div class="row">
+        <div class="col-auto">
+            <h3>
+                <a href="@Url.Action("Signup", "Home")"><i class="fa fa-user"></i>Tạo Tài Khoản</a>
+            </h3>
+        </div>
+        <div class="col-auto">
+            <h3>
+                <a href="@Url.Action("Login", "Home")"><i class="fa fa-star"></i> Đăng Nhập</a>
+            </h3>
+        </div>
+    </div>
+}
+else
+{
+    switch (Session["Roles"].ToString())
+    {
+        case "Mod":
+            <div class="row">
+                <div class="col-auto">
+                    <h3>
+                        <a href="@Url.Action("Index", "Mod")"><i class="fa fa-dashboard"></i>Trang Quản Lý</a>
+                    </h3>
+                </div>
+                <div class="col-auto">
+                    <h3>
+                        <a href="@Url.Action("Logoff", "Home")"><i class="fa fa-star"></i> Đăng Xuất</a>
+                    </h3>
+                </div>
+            </div>
+            break;
+        case "Admin":
+
+            break;
+        case "Customer":
+            <div class="row">
+                <div class="col-auto">
+                    <h3>
+                        <a href="@Url.Action("Notifications", "Home")"><i class="fa fa-bell"></i>Thông Báo</a>
+                    </h3>
+                </div>
+                <div class="col-auto">
+                    <h3>
+                        <a href="@Url.Action("CartList", "Shop")"><i class="fa fa-list"></i>Danh Sách Đơn Hàng</a>
+                    </h3>
+                </div>
+                <div class="col-auto">
+                    <h3>
+                        <a href="@Url.Action("Cart", "Shop" )"><i class="fa fa-shopping-cart"></i>Giỏ Hàng</a>
+                    </h3>
+                </div>
+                <div class="col-auto">
+                    <h3>
+                        <a href="@Url.Action("UserInfo", "Home")"><i class="fa fa-user"></i>Thông Tin Tài Khoản</a>
+                    </h3>
+                </div>
+                <div class="col-auto">
+                    <h3>
+                        <a href="@Url.Action("Logoff", "Home")"><i class="fa fa-star"></i> Đăng Xuất</a>
+                    </h3>
+                </div>
+            </div>
+            break;
+    }
+}

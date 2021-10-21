@@ -1,0 +1,28 @@
+﻿
+@{ 
+    string name = ViewBag.CategoryName;
+    string type = ViewBag.CategoryType;
+    string collapseId = "collapse" + type;
+    string collapseId2 = "#collapse" + type;
+}
+
+<h2 class="accordion-header mb-1" id= @type>
+    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target= @collapseId2 aria-expanded="true" aria-controls= @collapseId>
+        <h3>@name</h3>
+    </button>
+</h2>
+<div id= @collapseId class="accordion-collapse collapse " aria-labelledby= @type data-bs-parent="#managerCategory">
+    <div class="accordion-body">
+        <ul class="h3">
+            <li>
+                <a href="@Url.Action(type + "Manager","Mod")" style="text-decoration:none"> Quản Lý @name</a>
+            </li>
+            @if (type != "Customer" && type != "Cart")
+            {
+                <li>
+                    <a href="@Url.Action("Create" + type,"Mod")" style="text-decoration:none"> Tạo @name Mới</a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

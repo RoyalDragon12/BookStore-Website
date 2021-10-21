@@ -1,0 +1,49 @@
+﻿
+
+@{
+    string name = ViewBag.DataName;
+    string type = ViewBag.DataType;
+    string modeName = "";
+    string mode = "";
+    var list = new List<string> { "Book", "Author", "Publisher", "Genre" };
+    var searchType = new SelectList(list);
+}
+
+@using (Html.BeginForm(new { sort = ViewBag.Sort, asc= ViewBag.Asc, ViewBag.Mode }))
+{
+    <div class="mb-5 d-flex">
+        <div class="p-2">
+            @Html.ActionLink("Tạo " + name + " Mới", "Create" + type, null, new { @class = "btn btn-success", @style = "font-size:2rem" })
+            @switch (ViewBag.Mode)
+            {
+                case "Available":
+                    modeName = "Không Hiển Thị " + name + " Ẩn";
+                    mode = "Hidden";
+                    break;
+                case "Hidden":
+                    modeName = "Chỉ Hiển Thị " + name + " Ẩn";
+                    mode = "All";
+                    break;
+                default:
+                    modeName = "Tất Cả";
+                    mode = "Available";
+                    break;
+            }
+            @Html.ActionLink("Chế độ: " + modeName, type + "Manager", new { sort = ViewBag.Sort, asc = ViewBag.Asc, mode, q = ViewBag.Search, searchType = ViewBag.searchType }, new { @class = "btn btn-success", @style = "font-size:2rem" })
+        </div>
+        <div class="ms-auto p-2">
+            @Html.TextBox("q", null, new { @id = "SearchString", @style = "font-size:2rem;height:100%" })
+            @Html.Hidden("q")
+        </div>
+        <div class="p-2">
+            @if (type == "Book")
+            {
+                @Html.DropDownList("searchType", searchType, htmlAttributes: new { @style = "font-size:2rem" })
+                @Html.Hidden("searchType")
+            }
+        </div>
+        <div class="p-2">
+            <input class="btn btn-success" type="submit" value="Tìm Kiếm" style="font-size:2rem" />
+        </div>
+    </div>
+ }

@@ -1,0 +1,104 @@
+﻿@model IEnumerable<WebApplication2.Models.Cart>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "CartList";
+}
+
+<section id="cart_items">
+    <div class="table-responsive cart_info" style="width:100%">
+        <table class="table table-condensed text-center">
+            <thead>
+                <tr class="cart_menu">
+                    <th scope="col">@Html.DisplayNameFor(modelItem => modelItem.CartId)</th>
+                    <th scope="col">@Html.DisplayNameFor(modelItem => modelItem.Paid)</th>
+                    <th scope="col">@Html.DisplayNameFor(modelItem => modelItem.Completed)</th>
+                    <th scope="col">@Html.DisplayNameFor(modelItem => modelItem.ShippingAddress)</th>
+                    <th scope="col">@Html.DisplayNameFor(modelItem => modelItem.CartInfos)</th>
+                    <th scope="col">@Html.DisplayNameFor(modelItem => modelItem.ShippingCost)</th>
+                    <th scope="col">@Html.DisplayNameFor(modelItem => modelItem.TotalCost)</th>
+                    <th scope="col">@Html.DisplayNameFor(modelItem => modelItem.PurchaseDate)</th>
+                    <th scope="col">@Html.DisplayNameFor(modelItem => modelItem.DeliveryDate)</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="h3">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="align-middle">
+                            @Html.ActionLink(item.CartId + "", "Cart", new { id = item.CartId })
+                        </td>
+                        <td class="align-middle">
+                            @if (item.Paid != 0)
+                            {
+                                @:Trả Trước
+                            }
+                            else
+                            {
+                                @:Trả Sau
+                            }
+                        </td>
+                        <td class="align-middle">
+                            @switch (item.Completed)
+                            {
+                                case 1:
+                                    switch (item.ShipmentProgress)
+                                    {
+                                        case 2:
+                                            @:Đã Giao Hàng
+                                            break;
+                                        case 1:
+                                            @:Đang Giao Hàng
+                                            break;
+                                        default:
+                                            @:Đang Tiếp Nhận Đơn Đặt Hàng
+                                            break;
+                                    }
+                                    break;
+                                case -1:
+                                    @: Đã Hủy Đơn Hàng
+                                    break;
+                                default:
+                                    @: Chưa Đặt Hàng
+                                    break;
+                            }
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.ShippingAddress)
+                        </td>
+                        <td class="align-middle">
+                            @foreach (var cartinfo in item.CartInfos)
+                            {
+                                <ol>@cartinfo.Books.BookName x @cartinfo.Amount : @cartinfo.TotalCost</ol>
+                            }
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.ShippingCost)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.TotalCost)
+                        </td>
+                        <td class="align-middle">
+                           @if(item.PurchaseDate != null && item.Completed != 0)
+                           {
+                               @item.PurchaseDate.ToString("dd/MM/yyyy hh:mm")
+                           }
+                        </td>
+                        <td class="align-middle">
+                            @if (item.DeliveryDate != null && item.Completed != 0)
+                            {
+                                @item.DeliveryDate.ToString("dd/MM/yyyy")
+                            }
+                        </td>
+                        <td class="align-middle">
+                            
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+
+        </table>
+    </div>
+</section>

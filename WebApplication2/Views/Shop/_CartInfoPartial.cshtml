@@ -1,0 +1,101 @@
+﻿@using WebApplication2.Models;
+@model List<CartInfo>
+
+
+
+<div style="width:100%">
+    @using (Html.BeginForm("Update", "Shop", FormMethod.Post))
+    {
+        if (TempData["Completed"].ToString() == "0")
+        {
+            <div class="table-responsive cart_info">
+                <table class="table table-condensed text-center">
+                    <thead>
+                        <tr class="cart_menu">
+                            <th scope="col" class="align-middle">Hình Ảnh</th>
+                            <th scope="col" class="align-middle">Tên</th>
+                            <th scope="col" class="align-middle">Giá Tiền</th>
+                            <th scope="col" class="align-middle">Số Lượng</th>
+                            <th scope="col" class="align-middle">Thành Tiền</th>
+                            <th scope="col" class="align-middle">Xóa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count(); i++)
+                        {
+                            <tr>
+                                <td class="align-middle">
+                                    @Html.HiddenFor(m => m[i].CartInfoId)
+                                    <a><img src="@Url.Content("/Images/" + Model.ElementAt(i).Books.BookCode + ".jpg")" width="80" height="80" /></a>
+                                </td>
+                                @*Add a hyperlink in the book's name so the customer could return to the desired book's page for more information or sth.*@
+                                <td class="align-middle">
+                                    <h2 class="text-truncate">@Html.DisplayFor(m => m[i].Books.BookName)</h2>
+                                </td>
+                                <td class="align-middle">
+                                    <p class="cart_price">@Html.DisplayFor(m => m[i].SingleCost)</p>
+                                </td>
+                                <td class="align-middle">
+                                    @Html.ValidationMessageFor(m => m[i].Amount, "", new { @class = "text-danger" })
+                                    @Html.HiddenFor(m => m[i].BookId)
+                                    <h4>@Html.EditorFor(m => m[i].Amount, new { HtmlAttributes = new { @style = "width:40px" } })</h4>
+                                    @Html.HiddenFor(m => m[i].Amount)
+                                </td>
+                                <td class="align-middle">
+                                    <p class="cart_total_price">@Html.DisplayFor(m => m[i].TotalCost)</p>
+                                </td>
+                                <td class="align-middle">
+                                    <a class="cart_quantity_delete" href="@Url.Action("Remove","Shop",new { id = Model.ElementAt(i).BookId})"><i class="fa fa-times"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <input class="btn btn-success btn-lg" type="submit" value="Cập Nhật" />
+            </div>
+        }
+        else
+        {
+
+            <div class="table-responsive cart_info">
+                <table class="table table-condensed text-center">
+                    <thead>
+                        <tr class="cart_menu">
+                            <th scope="col" class="align-middle">Hình Ảnh</th>
+                            <th scope="col" class="align-middle">Tên</th>
+                            <th scope="col" class="align-middle">Giá Tiền</th>
+                            <th scope="col" class="align-middle">Số Lượng</th>
+                            <th scope="col" class="align-middle">Thành Tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count(); i++)
+                        {
+                            <tr>
+                                <td class="align-middle">
+                                    @Html.HiddenFor(m => m[i].CartInfoId)
+                                    <a><img src="@Url.Content("/Images/" + Model.ElementAt(i).Books.BookCode + ".jpg")" width="80" height="80" /></a>
+                                </td>
+
+                                <td class="align-middle">
+                                    <h2 class="text-truncate">@Html.DisplayFor(m => m[i].Books.BookName)</h2>
+                                </td>
+                                <td class="align-middle">
+                                    <p class="cart_price">@Html.DisplayFor(m => m[i].SingleCost)</p>
+                                </td>
+                                <td class="align-middle">
+                                    <h4>@Html.DisplayFor(itemModel => Model.ElementAt(i).Amount)</h4>
+                                </td>
+                                <td class="align-middle">
+                                    <p class="cart_total_price">@Html.DisplayFor(m => m[i].TotalCost)</p>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+</div>

@@ -1,0 +1,10 @@
+﻿@using WebApplication2.Models;
+@model IEnumerable<Book>
+
+
+<div class="features_items">
+    @foreach (var item in Model)
+        {
+            @Html.Action("_BookPartial", "Shop", new { id = item.BookId})
+        }
+</div>

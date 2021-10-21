@@ -1,0 +1,19 @@
+﻿@model WebApplication2.Models.Author
+
+
+
+<h1 class="display-5 text-center">Sửa Tác Giả</h1>
+@using (Html.BeginForm("EditAuthor", "Mod", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    { Html.RenderPartial("_AuthorFormPartial", Model); }
+
+    <div class="text-center">
+        <input type="submit" value="Sửa" class="btn btn-success btn-lg btn-block mt-5" />
+    </div>
+    <div class="text-center">
+        <a href="@Url.Action("AuthorManager","Mod")" class="btn btn-danger btn-lg mt-5" style="width:15%">Hủy Bỏ</a>
+    </div>
+}
+
+

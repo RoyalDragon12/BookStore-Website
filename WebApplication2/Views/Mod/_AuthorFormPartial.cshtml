@@ -1,0 +1,43 @@
+﻿
+@model WebApplication2.Models.Author
+
+
+    <div class="row">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @if (Model != null)
+        {
+            @Html.HiddenFor(model => model.AuthorId)
+        }
+        <div class="row text-center h3">
+            <div class="col">
+                @Html.LabelFor(model => model.AuthorName, new { @style = "float:right" })
+            </div>
+            <div class="col row">
+                <div class="col-auto">
+                    @if (Model != null)
+                    {
+                        @Html.HiddenFor(model => model.AuthorName)
+                        @Html.DisplayFor(model => model.AuthorName, new { htmlAttributes = new { @style = "font-size:2rem" } })
+                    }
+                    else
+                    {
+                        @Html.EditorFor(model => model.AuthorName, new { htmlAttributes = new { @style = "font-size:2rem" } })
+                        @Html.ValidationMessageFor(model => model.AuthorName, "", new { @class = "text-danger" })
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row text-center h3">
+            <div class="col">
+                @Html.LabelFor(model => model.isHiddenBool, htmlAttributes: new { @style = "float:right" })
+            </div>
+            <div class="col row">
+                <div class="col-auto">
+                    @Html.CheckBoxFor(model => model.isHiddenBool)
+                </div>
+                <div class="col-auto">
+                    <h3>Ẩn</h3>
+                </div>
+            </div>
+        </div>
+    </div>

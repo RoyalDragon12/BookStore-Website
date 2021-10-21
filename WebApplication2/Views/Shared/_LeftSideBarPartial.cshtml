@@ -1,0 +1,47 @@
+﻿<div class="left-sidebar">
+    <h2 class="title">Danh Mục</h2>
+    <div class="accordion" id="bookCategory">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="bookByGenre">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <h3>Thể Loại</h3>
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="bookByGenre" data-bs-parent="#bookCategory">
+                <div class="accordion-body">
+                    <h4>@Html.Action("_GenrePartial", "Shop")</h4>
+                </div>
+            </div>
+            <h2 class="accordion-header" id="bookByAuthor">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <h3>Tác Giả</h3>
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse " aria-labelledby="bookByAuthor" data-bs-parent="#bookCategory">
+                <div class="accordion-body">
+                    <h4>@Html.Action("_AuthorPartial", "Shop")</h4>
+                </div>
+            </div>
+            <h2 class="accordion-header" id="bookByPublisher">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                    <h3>Nhà Xuất Bản</h3>
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse " aria-labelledby="bookByPublisher" data-bs-parent="#bookCategory">
+                <div class="accordion-body">
+                    <h4>@Html.Action("_PublisherPartial", "Shop")</h4>
+                </div>
+            </div>
+            <h2 class="accordion-header" id="bookByPromotion">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                    <h3>Khuyến Mãi</h3>
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse " aria-labelledby="bookByPromotion" data-bs-parent="#bookCategory">
+                <div class="accordion-body">
+                    <h4>@Html.Action("_PromotionPartial", "Shop")</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

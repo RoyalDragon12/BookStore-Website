@@ -1,0 +1,101 @@
+﻿@model WebApplication2.Models.Cart
+@{ 
+    var FinalCost = Model.ShippingCost + Model.TotalCost;
+}
+<div class="container">
+    @if (TempData["Completed"].ToString() == "0")
+    {
+        using (Html.BeginForm("CheckoutCart", "Shop", FormMethod.Post))
+        {
+            FinalCost = Model.TotalCost + Model.ShippingCost;
+            @Html.HiddenFor(itemModel => Model.CartId)
+            <div class="row">
+                <div class="col">
+                    <div class="total_area h3">
+                        <ul>
+                            <li>Địa chỉ nhận hàng @Html.EditorFor(itemModel => Model.ShippingAddress, new { htmlAttributes = new { @style = "float:right; width:50%; max-width:100%" }})</li>
+                            <li>Trả trước <span>@Html.CheckBoxFor(itemModel => Model.PaidBool)</span></li>
+                            <li>Gía Tiền<span>@Html.DisplayFor(itemModel => Model.TotalCost)</span></li>
+                            <li>Tiền Ship<span>@Html.DisplayFor(itemModel => Model.ShippingCost)</span></li>
+                            <li>Tổng <span>@FinalCost</span></li>
+                        </ul>
+                        <div class="text-center">
+                            <input class="btn btn-success btn-lg" type="submit" value="Thanh Toán" />
+                            @Html.ActionLink("Xóa Giỏ", "ClearCart", "Shop", new { id = Model.CartId }, htmlAttributes: new { @class = "btn btn-lg btn-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        var shipmentProgress = "";
+        switch (Model.Completed)
+        {
+            case -1:
+                shipmentProgress = "Đã Hủy Đơn Hàng";
+                break;
+            default:
+                switch (Model.ShipmentProgress)
+                {
+                    default:
+                        shipmentProgress = "Đang Tiếp Nhận Đơn Hàng";
+                        break;
+                    case 1:
+                        shipmentProgress = "Đang Giao Hàng";
+                        break;
+                    case 2:
+                        shipmentProgress = "Đã Giao Hàng";
+                        break;
+                }
+                break;
+        }
+        <div class="row">
+            <div class="col">
+                <div class="total_area h3">
+                    <ul>
+                        <li>Địa chỉ nhận hàng<span>@Html.DisplayFor(itemModel => Model.ShippingAddress)</span></li>
+                        <li>Hình thức thanh toán
+                            <span>
+                                @if (Model.Paid != 0)
+                                {
+                                    @:Trả Trước
+                                }
+                                else
+                                {
+                                    @:Trả Sau
+                                }
+                            </span>
+                        </li>
+                        <li>Tình trạng giao hàng<span>@shipmentProgress</span></li>
+                        <li>Thời gian giao hàng<span>@Model.DeliveryDate.ToString("dd/MM/yyyy")</span></li>
+                        <li>Gía Tiền<span>@Html.DisplayFor(itemModel => Model.TotalCost)</span></li>
+                        <li>Tiền Ship<span>@Html.DisplayFor(itemModel => Model.ShippingCost)</span></li>
+                        <li>Tổng <span>@FinalCost</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="pt-3">
+            @if ((Model.Completed == 1 && Model.ShipmentProgress != 0) || (Model.Completed == -1 && Model.CartNote != null))
+            {
+                <div class="col">
+                    <p class="h2 fw-bold">Ghi Chú:</p>
+                </div>
+                <div class="col">
+                    @Html.TextAreaFor(model => Model.CartNote, new { @class = "form-control", @readonly = "readonly", @rows = 3, @style = "font-size: 1.5rem; min-width: 100%" })
+                </div>
+            }
+            @if (Model.ShipmentProgress != 2 && Model.Completed == 1)
+            {
+                @*still can't decide if the user should be able to cancel an order when it's being shipped or not. For now let them be.*@
+                <div class="row mt-3 h2">
+                    <div class="col text-center">
+                        @Html.ActionLink("Hủy Đơn Hàng", "CancelCart", "Shop", new { id = Model.CartId }, htmlAttributes: new { @class = "btn btn-lg btn-danger" })
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

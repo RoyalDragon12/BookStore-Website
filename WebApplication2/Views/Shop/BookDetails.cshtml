@@ -1,0 +1,115 @@
+﻿@model WebApplication2.Models.Book
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "View";
+    string amountResult = "";
+    bool isMod = false;
+    if (Session["Roles"] != null)
+    {
+        if (Session["Roles"].ToString() == "Mod")
+        {
+            isMod = true;
+        }
+    }
+}
+
+<body>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="product-details">
+                    <div class="col-sm-4">
+                        <div class="view-product">
+                            <img src="@Url.Content("~/Images/" + Model.BookCode +".jpg")" alt="" />
+                        </div>
+                        @if (isMod)
+                        {
+                            <div class="text-center mt-3">
+                                <a href="@Url.Action("EditBook","Mod",new { id= Model.BookId })" class="btn btn-success btn-lg btn-block"><h3>Sửa Sách</h3></a>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="product-information">
+                            <h1 class="display-5"><b>@Html.DisplayFor(model => Model.BookName)</b></h1>
+                            <h3><b>Tác Giả: </b>@Html.DisplayFor(model => Model.Authors.AuthorName)</h3>
+                            <h3><b>Thể Loại:</b> @Html.Action("_BookDetailsGenrePartial", "Shop", new { id = Model.BookId })</h3>
+                            <h3><b>Nhà Xuất Bản: </b><a href="@Url.Action("PublisherDetails","Shop",new { id = Model.Publishers.PublisherCode})">@Model.Publishers.PublisherName</a></h3>
+                            <h3><b>Giá Tiền: </b></h3><h1>@Html.Action("_BookCostPartial", "Shop", new { id = Model.BookId })</h1>
+                            @if (!isMod)
+                            {
+                                <div class="pb-2">
+                                    @using (Html.BeginForm("Add", "Shop", FormMethod.Post))
+                                    {
+                                        @Html.Hidden("id", Model.BookId)
+                                        <p class="h3">Số lượng: @Html.Editor("amount", new { htmlAttributes = new { @type = "number", @min = "1", @max = "99", @Value = "1", style = "width:40px" } })</p>
+                                        <button type="submit" class="btn btn-secondary btn-lg ">
+                                            <i class="fa fa-shopping-cart"></i> Thêm Vô Giỏ
+                                        </button>
+                                    }
+                                </div>
+                                if (TempData["ErrorMessage"] != null)
+                                {
+                                    <h3 class="text-danger">
+                                        @TempData["ErrorMessage"].ToString()
+                                    </h3>
+                                }
+                                if (Model.StorageAmount > 0)
+                                {
+                                    amountResult = "Còn Hàng";
+                                }
+                                else
+                                {
+                                    amountResult = "Hết Hàng";
+                                }
+                                <h3>
+                                    <b>Tình Trạng: </b>@amountResult
+                                </h3>
+                            }
+                            else
+                            {
+                                <h3><b>Tồn Kho: @Model.StorageAmount</b></h3>
+                            }
+                        </div>
+                    </div>
+                </div><!--/product-details-->
+
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active btn-lg" id="pills-description-tab" data-bs-toggle="pill" data-bs-target="#pills-description" type="button" role="tab" aria-controls="pills-description" aria-selected="true"><h3>Thông Tin Sách</h3></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link btn-lg" id="pills-comment-tab" data-bs-toggle="pill" data-bs-target="#pills-comment" type="button" role="tab" aria-controls="pills-comment" aria-selected="false"><h3>Bình Luận</h3></button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane active" id="pills-description" role="tabpanel" aria-labelledby="pills-description-tab">
+                        <div class="col-sm-12">
+                            <h2><b>@Html.DisplayFor(model => Model.BookName)</b></h2>
+                            <h3 class="mt-1 mb-1" style="white-space: pre-line">@Html.DisplayFor(model => Model.Description)</h3>
+                        </div>
+                    </div>
+                    <div class="tab-pane " id="pills-comment" role="tabpanel" aria-labelledby="pills-comment-tab">
+                        <h2><b>Ghi Bình Luận Của Bạn</b></h2>
+                        <form action="#">
+                            <h3>
+                                <input type="text" placeholder="Họ Tên" />
+                            </h3>
+                            <h3>
+                                <input type="email" placeholder="Địa Chỉ Email" />
+                            </h3>
+                            <textarea name=""></textarea>
+                            <button type="button" class="btn btn-secondary btn-lg"><h3>Gửi</h3></button>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+
+</body>

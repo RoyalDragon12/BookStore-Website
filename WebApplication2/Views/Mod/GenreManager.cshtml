@@ -1,0 +1,88 @@
+﻿@model IEnumerable<WebApplication2.ViewModel.GenreBookCountViewModel>
+
+@{
+    Layout = "~/Views/Shared/_ModLayout.cshtml";
+    string s = "";
+    string sort = ViewBag.Sort;
+    bool asc = ViewBag.Asc;
+    string mode = ViewBag.Mode;
+    string q = ViewBag.Search;
+    string page = ViewBag.Page;
+    int pageCount = ViewBag.PageCount;
+}
+
+@Html.Partial("_ManagerToolbarsPartial")
+
+<div>
+    <table class="table table-hover table-striped table-bordered table-responsive-lg">
+        <tr class="table-light h2">
+            <th>
+                @Html.DisplayNameFor(model => model.Genre.GenreName)
+                @{ s = "GenreName";}
+                @if (ViewBag.Sort == s)
+                {
+                    if (ViewBag.Asc)
+                    {
+                        @Html.ActionLink("Sort Desc", "GenreManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Sort Asc", "GenreManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search })
+                    }
+                }
+                else
+                {
+                    @Html.ActionLink("Sort", "GenreManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search })
+                }
+            </th>
+            <th>
+                Số Lượng Sách
+                @{ s = "BookCount";}
+                @if (ViewBag.Sort == s)
+                {
+                    if (ViewBag.Asc)
+                    {
+                        @Html.ActionLink("Sort Desc", "GenreManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Sort Asc", "GenreManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search })
+                    }
+                }
+                else
+                {
+                    @Html.ActionLink("Sort", "GenreManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search })
+                }
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="h3">
+                <td>
+                    @Html.ActionLink(item.Genre.GenreName, "EditGenre", new { id = item.Genre.GenreId }, new { @style = "text-decoration: none" })
+                </td>
+                <td>
+                    @Html.DisplayFor(itemModel => item.bookCount)
+                </td>
+                <td>
+                    @Html.ActionLink("Search", "BookManager", new { q = item.Genre.GenreName, searchType = ViewBag.DataType }) |
+                    @if (item.Genre.isHiddenBool)
+                    {
+                        @Html.ActionLink("Unhide", "HideGenre", new { id = item.Genre.GenreId })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Hide", "HideGenre", new { id = item.Genre.GenreId })
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<div>
+    @Html.Action("_PagingView", "Home", new { page, pageCount, actionName = "GenreManager", controllerName = "Mod", sort, asc, mode, q })
+</div>

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebApplication2.Models.CartInfo>
+
+@{
+
+}
+
+
+<div class="table-responsive cart_info">
+    <table class="table table-condensed text-center">
+        <thead>
+            <tr class="cart_menu">
+                <th scope="col" class="align-middle">Hình Ảnh</th>
+                <th scope="col" class="align-middle">@Html.DisplayNameFor(model => model.Books.BookName)</th>
+                <th scope="col" class="align-middle">@Html.DisplayNameFor(model => model.Books.Cost)</th>
+                <th scope="col" class="align-middle">@Html.DisplayNameFor(model => model.SingleCost)</th>
+                <th scope="col" class="align-middle">@Html.DisplayNameFor(model => model.Amount)</th>
+                <th scope="col" class="align-middle">@Html.DisplayNameFor(model => model.TotalCost)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="align-middle">
+                        @Html.HiddenFor(m => item.CartInfoId)
+                        <a><img src="@Url.Content("/Images/" + item.Books.BookCode + ".jpg")" width="80" height="80" /></a>
+                    </td>
+                    @*Add a hyperlink in the book's name so the customer could return to the desired book's page for more information or sth.*@
+                    <td class="align-middle">
+                        <h2 class="text-truncate">@Html.DisplayFor(modelItem => item.Books.BookName)</h2>
+                    </td>
+                    <td class="align-middle">
+                        <p class="cart_price">@Html.DisplayFor(modelItem => item.Books.Cost)</p>
+                    </td>
+                    <td class="align-middle">
+                        <p class="cart_price">@Html.DisplayFor(modelItem => item.SingleCost)</p>
+                    </td>
+                    <td class="align-middle">
+                        <p style="font-size:24px">@Html.DisplayFor(modelItem => item.Amount)</p>
+                    </td>
+                    <td class="align-middle">
+                        <p class="cart_total_price">@Html.DisplayFor(modelItem => item.TotalCost)</p>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

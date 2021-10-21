@@ -1,0 +1,15 @@
+﻿@model WebApplication2.Models.Book
+
+@{
+
+}
+
+@if (ViewBag.DiscountedCost != null)
+{
+    <span class="text-decoration-line-through fw-light">@Model.Cost</span>
+    <span class="fw-bold">@ViewBag.DiscountedCost</span> <span class="fs-6 badge bg-primary align-top">@ViewBag.DiscountPercent</span>
+}
+else
+{
+    @Model.Cost
+}

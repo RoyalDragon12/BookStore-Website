@@ -1,0 +1,17 @@
+﻿@using WebApplication2.Models;
+@model IEnumerable<Author>
+
+<!DOCTYPE html>
+
+
+    <ul>
+        <li>
+            <a href="@Url.Action("Index","Shop")">Tất Cả</a>
+        </li>
+        @foreach (var item in Model)
+        {
+            <li><a href="@Url.Action("Index","Shop", new { id = "author", q = item.AuthorName })">@item.AuthorName </a></li>
+        }
+    </ul>
+
+

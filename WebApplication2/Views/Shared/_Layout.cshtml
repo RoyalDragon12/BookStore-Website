@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Trang Chủ</title>
+    <link href="~/Content/CSSHome/prettyPhoto.css" rel="stylesheet">
+    <link href="~/Content/CSSHome/price-range.css" rel="stylesheet">
+    <link href="~/Content/CSSHome/animate.css" rel="stylesheet">
+    <link href="~/Content/CSSHome/main.css" rel="stylesheet">
+    <link href="~/Content/CSSHome/responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    @Styles.Render("~/Content/css")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery.scrollUp.min.js"></script>
+    <script src="~/Scripts/price-range.js"></script>
+    <script src="~/Scripts/jquery.prettyPhoto.js"></script>
+    <script src="~/Scripts/main.js"></script>
+</head>
+
+<body>
+    <header id="header">
+        @{Html.RenderPartial("_MainHeaderPartial");}
+    </header>
+
+    @RenderBody()
+
+    <footer id="footer"></footer>
+</body>
+
+</html>

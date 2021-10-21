@@ -1,0 +1,62 @@
+﻿@{ 
+    string actionName = ViewBag.ActionName;
+    string controllerName = ViewBag.ControllerName;
+    string sort = ViewBag.Sort;
+    string mode = ViewBag.Mode;
+    bool asc = ViewBag.Asc;
+    string q = ViewBag.Search;
+
+    int page = ViewBag.Page;
+    int previousPage = page - 1;
+    int nextPage = page + 1;
+    int pageCount = ViewBag.PageCount;
+}
+
+<div class="footer-top">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            @if (page == 1)
+            {
+                <li class="page-item disabled">@Html.ActionLink("Previous", actionName, controllerName, new { sort, mode, asc, q, page }, new { @class = "page-link" })</li>
+                <li class="page-item active">@Html.ActionLink("1", actionName, controllerName, new { sort, mode, asc, q, page }, new { @class = "page-link" })</li>
+            }
+            else
+            {
+                <li class="page-item">@Html.ActionLink("Previous", actionName, controllerName, new { sort, mode, asc, q, page = previousPage }, new { @class = "page-link" })</li>
+                <li class="page-item">@Html.ActionLink("1", actionName, controllerName, new { sort, mode, asc, q, page = 1 }, new { @class = "page-link" })</li>
+            }
+            @if (pageCount > 1)
+            {
+                if (previousPage > 2)
+                {
+                    <li class="page-item"><a class="page-link" href="#">...</a></li>
+                }
+                if (previousPage >= 2)
+                {
+                    <li class="page-item">@Html.ActionLink(previousPage.ToString(), actionName, controllerName, new { sort, mode, asc, q, page = previousPage }, new { @class = "page-link" })</li>
+                }
+                if (page >= 2)
+                {
+                    <li class="page-item active">@Html.ActionLink(page.ToString(), actionName, controllerName, new { sort, mode, asc, q, page = page }, new { @class = "page-link" })</li>
+                }
+                if (nextPage < pageCount)
+                {
+                    <li class="page-item">@Html.ActionLink(nextPage.ToString(), actionName, controllerName, new { sort, mode, asc, q, page = nextPage }, new { @class = "page-link" })</li>
+                }
+                if (pageCount - nextPage >= 2) //means if Count = 10, nextPage = 8, icon for page number 9 will become "...", so it will only display 1 ... 6 7 8 ... 10
+                {
+                    <li class="page-item"><a class="page-link" href="#">...</a></li>
+                }
+            }
+            @if (nextPage <= pageCount)
+            {
+                <li class="page-item">@Html.ActionLink(pageCount.ToString(), actionName, controllerName, new { sort, mode, asc, q, page = pageCount }, new { @class = "page-link" })</li>
+                <li class="page-item">@Html.ActionLink("Next", actionName, controllerName, new { sort, mode, asc, q, page = nextPage }, new { @class = "page-link" })</li>
+            }
+            else
+            {
+                <li class="page-item disabled">@Html.ActionLink("Next", actionName, controllerName, new { sort, mode, asc, q, page = pageCount }, new { @class = "page-link" })</li>
+            }
+        </ul>
+    </nav>
+</div>

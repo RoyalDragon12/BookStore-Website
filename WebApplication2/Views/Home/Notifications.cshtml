@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebApplication2.Models.Notification>
+
+@{
+
+}
+
+<table class="table table-hover table-striped table-bordered table-responsive-lg">
+    <tr class="h2">
+        <th>
+            @Html.DisplayNameFor(m => m.CartId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.NotiDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.NotiState)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.NotiDate)
+        </th>
+    </tr>
+    @foreach(var item in Model)
+    {
+        <tr class="h3">
+            <td>
+                @Html.DisplayFor(m => item.CartId)
+            </td>
+            <td>
+                @if (item.NotiState == 0)
+                {
+                    <p>
+                        @Html.ActionLink(item.NotiDescription.ToString(), "Cart", "Shop", new { id = item.CartId, notiId = item.NotificationId }, new { @class = "fw-bold text-decoration-none" })
+                    </p>
+                }
+                else
+                {
+                    @Html.ActionLink(item.NotiDescription.ToString(), "Cart", "Shop", new { id = item.CartId, notiId = item.NotificationId }, new { @class = " fw-light text-decoration-none" })
+                }
+            </td>
+            <td>
+                @if(item.NotiState == 0)
+                {
+                    @: Chưa Đọc
+                }
+                else
+                {
+                    @: Đã Đọc
+                }
+            </td>
+            <td>
+                @item.NotiDate.ToString("dd/MM/yyyy hh:mm")
+            </td>
+        </tr>
+    }
+</table>

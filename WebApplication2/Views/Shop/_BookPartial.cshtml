@@ -1,0 +1,16 @@
+﻿@model WebApplication2.Models.Book
+
+    <div class="col-sm-4">
+        <div class="product-image-wrapper">
+            <div class="single-products">
+                <div class="productinfo text-center">
+                    <a href="@Url.Action("BookDetails","Shop",new { id = Model.BookCode})" class="text-decoration-none"><img src=@Url.Content("~/Images/" + Model.BookCode +".jpg") alt="" width="200" height="300" /></a>
+                    <div class="mt-3">
+                        <a href="@Url.Action("BookDetails","Shop",new { id = Model.BookCode})" class="text-decoration-none"><h3 class ="text-truncate">@Model.BookName</h3></a>
+                    </div>
+                    <h3>@Html.Action("_BookCostPartial","Shop",new { id = Model.BookId })</h3>
+                    <a href="@Url.Action("Add","Shop",new { id = Model.BookCode, amount = 1 })" class="btn btn-secondary btn-lg btn-block"><h3><i class="fa fa-shopping-cart"></i> Add to cart</h3></a>
+                </div>
+            </div>
+        </div>
+    </div>

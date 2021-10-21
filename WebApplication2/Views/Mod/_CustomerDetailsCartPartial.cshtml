@@ -1,0 +1,81 @@
+﻿@model IEnumerable<WebApplication2.Models.Cart>
+
+@{ 
+    int amount = ViewBag.Amount;
+}
+
+@*Intended to share partial view with CartManager, but is proven to be moderately difficult, so it's better to copy paste.*@
+
+<div>
+    @if (amount > 0)
+    {
+        <h1 class="mb-5 text-center">@amount Đơn Hàng Mới Nhất Của Khách Hàng</h1>
+        <table class="table table-hover table-striped table-bordered table-responsive-lg">
+            <tr class="table-light h2">
+                <th>
+                    @Html.DisplayNameFor(model => model.CartId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Completed)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalCost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PurchaseDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeliveryDate)
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr class="h3">
+                    <td>
+                        @Html.ActionLink(item.CartId + "", "CartDetails", new { id = item.CartId }, new { @style = "text-decoration: none" })
+                    </td>
+                    <td>
+                        @switch (item.Completed)
+                        {
+                            case -1:
+                                @:Đã Hủy
+                                break;
+                            case 1:
+                                switch (item.ShipmentProgress)
+                                {
+                                    case 0:
+                                        @: Đang Chờ Xác Nhận
+                                        break;
+                                    case 1:
+                                        @: Đang Chuyển Hàng
+                                        break;
+                                    case 2:
+                                        @: Đã Chuyển Hàng
+                                        break;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalCost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PurchaseDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryDate)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        <h2 class="text-center">Không Có Đơn Hàng Nào Từ Khách Hàng Này</h2>
+    }
+</div>
+

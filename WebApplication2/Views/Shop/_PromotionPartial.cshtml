@@ -1,0 +1,13 @@
+﻿@using WebApplication2.Models;
+@model IEnumerable<Promotion>
+
+<!DOCTYPE html>
+
+
+<ul>
+    @foreach (var item in Model)
+    {
+        //<li><a href="@Url.Action("Index","Shop", new { id = "promotion", q = item.PromotionId })">@item.PromoName </a></li> ---- To be considered
+        <li><a href="@Url.Action("PromotionDetails","Shop", new { id = item.PromotionId })">@item.PromoName </a></li>
+    }
+</ul>

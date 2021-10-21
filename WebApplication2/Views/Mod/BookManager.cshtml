@@ -1,0 +1,177 @@
+﻿@model IEnumerable<WebApplication2.Models.Book>
+
+@{
+    Layout = "~/Views/Shared/_ModLayout.cshtml";
+    string s = "";
+    string sort = ViewBag.Sort;
+    bool asc = ViewBag.Asc;
+    string mode = ViewBag.Mode;
+    string q = ViewBag.Search;
+    string page = ViewBag.Page;
+    int pageCount = ViewBag.PageCount;
+}
+
+@Html.Partial("_ManagerToolbarsPartial")
+
+
+
+<div>
+    <table class="table table-hover table-striped table-bordered table-responsive-lg">
+        <tr class="table-light h2">
+            <th>
+                @Html.DisplayNameFor(model => model.BookName)
+                @{ s = "BookName";}
+                @if (sort == s)
+                {
+                    if (asc)
+                    {
+                        @Html.ActionLink("Sort Desc", "BookManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Sort Asc", "BookManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                    }
+                }
+                else
+                {
+                    @Html.ActionLink("Sort", "BookManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                }
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Authors.AuthorName)
+                @{ s = "AuthorName";}
+                @if (sort == s)
+                {
+                    if (asc)
+                    {
+                        @Html.ActionLink("Sort Desc", "BookManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Sort Asc", "BookManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                    }
+                }
+                else
+                {
+                    @Html.ActionLink("Sort", "BookManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                }
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Publishers.PublisherName)
+                @{ s = "PublisherName";}
+                @if (sort == s)
+                {
+                    if (asc)
+                    {
+                        @Html.ActionLink("Sort Desc", "BookManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Sort Asc", "BookManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                    }
+                }
+                else
+                {
+                    @Html.ActionLink("Sort", "BookManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                }
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cost)
+                @{ s = "Cost";}
+                @if (sort == s)
+                {
+                    if (asc)
+                    {
+                        @Html.ActionLink("Sort Desc", "BookManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Sort Asc", "BookManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                    }
+                }
+                else
+                {
+                    @Html.ActionLink("Sort", "BookManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                }
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+                @{ s = "UpdatedDate";}
+                @if (sort == s)
+                {
+                    if (asc)
+                    {
+                        @Html.ActionLink("Sort Desc", "BookManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Sort Asc", "BookManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                    }
+                }
+                else
+                {
+                    @Html.ActionLink("Sort", "BookManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                }
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StorageAmount)
+                @{ s = "StorageAmount";}
+                @if (sort == s)
+                {
+                    if (asc)
+                    {
+                        @Html.ActionLink("Sort Desc", "BookManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Sort Asc", "BookManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                    }
+                }
+                else
+                {
+                    @Html.ActionLink("Sort", "BookManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.SearchType })
+                }
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="h3">
+                <td>
+                    @Html.ActionLink(item.BookName, "EditBook", new { id = item.BookId }, new { @style = "text-decoration: none" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Authors.AuthorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publishers.PublisherName)
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StorageAmount)
+                </td>
+                <td>
+                    @if (item.isHiddenBool)
+                    {
+                        @Html.ActionLink("Unhide", "HideBook", new { id = item.BookId })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Hide", "HideBook", new { id = item.BookId })
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<div>
+    @Html.Action("_PagingView","Home",new { page, pageCount, actionName = "BookManager",controllerName= "Mod", sort,asc,mode,q})
+</div>

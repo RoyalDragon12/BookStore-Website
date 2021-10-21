@@ -1,0 +1,100 @@
+﻿@model IEnumerable<WebApplication2.ViewModel.PublisherBookCountViewModel>
+
+@{
+    Layout = "~/Views/Shared/_ModLayout.cshtml";
+    string s = "";
+    string sort = ViewBag.Sort;
+    bool asc = ViewBag.Asc;
+    string mode = ViewBag.Mode;
+    string q = ViewBag.Search;
+    string page = ViewBag.Page;
+    int pageCount = ViewBag.PageCount;
+}
+
+@Html.Partial("_ManagerToolbarsPartial")
+
+<div>
+    <table class="table table-hover table-striped table-bordered table-responsive-lg">
+        <tr class="table-light h2">
+            <th>
+                @Html.DisplayNameFor(model => model.Publisher.PublisherName)
+                @{ s = "PublisherName";}
+                @if (ViewBag.Sort == s)
+                {
+                    if (ViewBag.Asc)
+                    {
+                        @Html.ActionLink("Sort Desc", "PublisherManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Sort Asc", "PublisherManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search })
+                    }
+                }
+                else
+                {
+                    @Html.ActionLink("Sort", "PublisherManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search })
+                }
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Publisher.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Publisher.PhoneNumber)
+            </th>
+            <th>
+                Số Lượng Sách
+                @{ s = "BookCount";}
+                @if (ViewBag.Sort == s)
+                {
+                    if (ViewBag.Asc)
+                    {
+                        @Html.ActionLink("Sort Desc", "PublisherManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Sort Asc", "PublisherManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search })
+                    }
+                }
+                else
+                {
+                    @Html.ActionLink("Sort", "PublisherManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search })
+                }
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="h3">
+                <td>
+                    @Html.ActionLink(item.Publisher.PublisherName, "EditPublisher", new { id = item.Publisher.PublisherId }, new { @style = "text-decoration: none" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bookCount)
+                </td>
+                <td>
+                    @Html.ActionLink("Search", "BookManager", new { q = item.Publisher.PublisherName, searchType = ViewBag.DataType }) |
+                    @if (item.Publisher.isHiddenBool)
+                    {
+                        @Html.ActionLink("Unhide", "HidePublisher", new { id = item.Publisher.PublisherId })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Hide", "HidePublisher", new { id = item.Publisher.PublisherId })
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<div>
+    @Html.Action("_PagingView", "Home", new { page, pageCount, actionName = "PublisherManager", controllerName = "Mod", sort, asc, mode, q })
+</div>

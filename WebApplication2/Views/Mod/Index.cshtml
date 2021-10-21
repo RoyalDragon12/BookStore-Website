@@ -1,0 +1,53 @@
+﻿@model WebApplication2.Models.User
+
+@{
+    Layout = "~/Views/Shared/_ModLayout.cshtml";
+    ViewBag.Title = "Index";
+}
+
+
+                <div class="border border-secondary">
+                    <div class="row">
+                        <div class="col-auto">
+                            <img src="~/Images/user_icon.png" style="width:200px" class="img-thumbnail img-fluid" />
+                        </div>
+                        <div class="col">
+                            <h1>@Model.Name</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" style="height:200px">
+                    <span class="align-middle">TO BE ADDED</span>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <a class="btn btn-secondary btn-lg btn-block" href="@Url.Action("CartManager")" role="button" style="border-radius:10px"><h1>Quản Lý Đơn Hàng</h1></a>
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-secondary btn-lg btn-block" href="@Url.Action("FeedbackManager")" role="button" style="border-radius:10px"><h1>Quản Lý Phản Hồi</h1></a>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <a class="btn btn-secondary btn-lg btn-block" href="@Url.Action("BookManager")" role="button" style="border-radius:10px"><h1>Quản Lý Sách</h1></a>
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-secondary btn-lg btn-block" href="@Url.Action("PublisherManager")" role="button" style="border-radius:10px"><h1>Quản Lý NXB</h1></a>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <a class="btn btn-secondary btn-lg btn-block" href="@Url.Action("GenreManager")" role="button" style="border-radius:10px"><h1>Quản Lý Thể Loại</h1></a>
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-secondary btn-lg btn-block" href="@Url.Action("AuthorManager")" role="button" style="border-radius:10px"><h1>Quản Lý Tác Giả</h1></a>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <a class="btn btn-secondary btn-lg btn-block" href="@Url.Action("CustomerManager")" role="button" style="border-radius:10px"><h1>Quản Lý Khách Hàng</h1></a>
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-secondary btn-lg btn-block" href="@Url.Action("PromotionManager")" role="button" style="border-radius:10px"><h1>Quản Lý Chương Trình Khuyến Mãi</h1></a>
+                    </div>
+                </div>

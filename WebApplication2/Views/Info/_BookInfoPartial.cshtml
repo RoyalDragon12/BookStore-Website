@@ -1,0 +1,38 @@
+﻿@using WebApplication2.Models;
+@model IEnumerable<Book>
+
+
+@{
+    foreach (var item in Model)
+    {
+        <div class="tab-content">
+            <div class="tab-pane fade" id="CHITIET">
+                <div class="col-sm-12">
+                    <p>
+                        @item.
+                    </p>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="ThongTin">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Mã hàng</td>
+                            <td>@item.BookId</td>
+                        </tr>
+                        <tr>
+                            <td>Tác giả</td>
+                            <td>@item.BookName</td>
+                        </tr>
+                        <tr>
+                            <td>NXB</td>
+                            <td>@item.ChuDe</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    }
+}

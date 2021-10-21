@@ -1,0 +1,19 @@
+﻿@model WebApplication2.Models.Publisher
+
+
+
+<h1 class="display-5 text-center">Sửa NXB</h1>
+@using (Html.BeginForm("EditPublisher", "Mod", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    { Html.RenderPartial("_PublisherFormPartial", Model); }
+
+    <div class="text-center">
+        <input type="submit" value="Sửa" class="btn btn-success btn-lg btn-block mt-5" />
+    </div>
+    <div class="text-center">
+        <a href="@Url.Action("PublisherManager","Mod")" class="btn btn-danger btn-lg mt-5" style="width:15%">Hủy Bỏ</a>
+    </div>
+}
+
+

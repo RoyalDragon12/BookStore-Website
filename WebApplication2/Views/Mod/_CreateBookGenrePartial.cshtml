@@ -1,0 +1,23 @@
+﻿@using WebApplication2.ViewModel;
+@model List<GenreViewModel>
+
+@{ 
+    int count = 4; //Pre-set the number of row before creating new col here
+}
+
+@for (int i = 0; i < Model.Count(); i++)
+{
+    if (i == 0 || i % count == 0)
+    {
+        @:<div class="col-auto">
+        }
+        <div>
+            @Html.HiddenFor(item => item[i].GenreId)
+            @Html.CheckBoxFor(item => item[i].GenreIsChecked)
+            @Html.DisplayFor(item => item[i].GenreName)
+        </div>
+        if (i == count -1 || i % count == (count - 1) || i == Model.Count() - 1)
+        {
+        @:</div>
+    }
+}

@@ -1,0 +1,48 @@
+﻿@model WebApplication2.Models.Publisher
+
+@{
+
+}
+
+<body>
+    <section>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-9 padding-right">
+                    <div class="product-details">
+                        <!--product-details-->
+                        <div class="col-sm-5">
+                            <div class="view-product">
+                                <img src="@Url.Content("~/Images/" + Model.PublisherCode +".jpg")" alt="" />
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="publisher-information">
+                                <!--/publisher-information-->
+
+                                <h2>@Html.DisplayFor(model => Model.PublisherName)</h2>
+                                <p>SĐT: @Html.DisplayFor(model => Model.PhoneNumber)</p>
+                                <p>Địa Chỉ: @Html.DisplayFor(model => Model.Address)</p>
+
+                            </div><!--/publisher-information-->
+                        </div>
+                    </div><!--/publisher-details-->
+
+                <div>
+                    <h1>Sách Của NXB:</h1>
+                </div>
+
+                </div>
+                <div class="col-sm-9 padding-right">
+                    @Html.Action("_BookListPartial","Shop", new { id = Model.PublisherId, type ="publisher"})
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</body>

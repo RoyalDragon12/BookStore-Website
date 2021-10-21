@@ -1,0 +1,27 @@
+﻿@model WebApplication2.Models.Promotion
+
+
+    <div class="container">
+        <div class="col-sm-3">
+            @{Html.RenderPartial("_LeftSideBarPartial");}
+        </div>
+        <div class="col-sm-9 padding-right">
+            <div class="text-center">
+                <div class="row ">
+                    <h1>@Html.DisplayFor(m => Model.PromoName)</h1>
+                </div>
+                <div class="pt-2 pb-2">
+                    <img src=@Url.Content("~/Images/promotion" + Model.PromotionId +".jpg") alt="" class="img-fluid" />
+                </div>
+                <div class="h3 pt-2 pb-2">
+                    Thời gian: @Model.PromoStartDate.ToString("dd/MM/yyyy") ~ @Model.PromoEndDate.ToString("dd/MM/yyyy")
+                </div>
+                <div class="h2 pt-2 pb-2">
+                    @Html.DisplayFor(m => Model.PromoDesc)
+                </div>
+            </div>
+            <div class="pt-5">
+                @Html.Action("_BookListPartial", "Shop", new { id = Model.PromotionId, type = "promotion" })
+            </div>
+        </div>
+    </div>

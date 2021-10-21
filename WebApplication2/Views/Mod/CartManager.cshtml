@@ -1,0 +1,219 @@
+﻿@model IEnumerable<WebApplication2.Models.Cart>
+@{
+    Layout = "~/Views/Shared/_ModLayout.cshtml";
+    string s = "";
+    string modeName = "";
+    var list = new List<string> { "CartId", "UserId", "UserName" };
+    var searchType = new SelectList(list);
+    string sort = ViewBag.Sort;
+    bool asc = ViewBag.Asc;
+    string mode = ViewBag.Mode;
+    string q = ViewBag.Search;
+    string page = ViewBag.Page;
+    int pageCount = ViewBag.PageCount;
+}
+
+<div>
+    @using (Html.BeginForm(new { sort = ViewBag.Sort, asc = ViewBag.Asc, ViewBag.Mode }))
+    {
+        <div class="mb-5 d-flex">
+            <div class="p-2">
+                @switch (ViewBag.Mode)
+                {
+                    case "All":
+                        modeName = "Tất Cả";
+                        mode = "Waiting";
+                        break;
+                    case "Shipping":
+                        modeName = "Chỉ Hiển Thị Đơn Hàng Đang Giao";
+                        mode = "Shipped";
+                        break;
+                    case "Shipped":
+                        modeName = "Chỉ Hiển Thị Đơn Hàng Đã Giao";
+                        mode = "Cancelled";
+                        break;
+                    case "Cancelled":
+                        modeName = "Chỉ Hiển Thị Đơn Hàng Đã Hủy";
+                        mode = "All";
+                        break;
+                    default:
+                        modeName = "Chỉ Hiển Thị Đơn Hàng Chưa Xác Nhận";
+                        mode = "Shipping";
+                        break;
+                }
+                @Html.ActionLink("Chế Độ: " + modeName, "CartManager", new { sort = ViewBag.Sort, asc = ViewBag.Asc, mode, q = ViewBag.Search, searchType = ViewBag.searchType }, new { @class = "btn btn-success", @style = "font-size:2rem" })
+            </div>
+            <div class="ms-auto p-2">
+                @Html.TextBox("q", null, new { @id = "SearchString", @style = "font-size:2rem;height:100%" })
+                @Html.Hidden("q")
+            </div>
+            <div class="p-2">
+                @Html.DropDownList("searchType", searchType, htmlAttributes: new { @style = "font-size:2rem" })
+                @Html.Hidden("searchType")
+            </div>
+            <div class="p-2">
+                <input class="btn btn-success" type="submit" value="Tìm Kiếm" style="font-size:2rem" />
+            </div>
+        </div>
+    }
+
+<table class="table table-hover table-striped table-bordered table-responsive-lg">
+    <tr class="table-light h2">
+        <th>
+            @Html.DisplayNameFor(model => model.CartId)
+            @{ s = "CartId";}
+            @if (ViewBag.Sort == s)
+            {
+                if (ViewBag.Asc)
+                {
+                    @Html.ActionLink("Sort Desc", "CartManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+                else
+                {
+                    @Html.ActionLink("Sort Asc", "CartManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+            }
+            else
+            {
+                @Html.ActionLink("Sort", "CartManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+            }
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+            @{ s = "UserId";}
+            @if (ViewBag.Sort == s)
+            {
+                if (ViewBag.Asc)
+                {
+                    @Html.ActionLink("Sort Desc", "CartManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+                else
+                {
+                    @Html.ActionLink("Sort Asc", "CartManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+            }
+            else
+            {
+                @Html.ActionLink("Sort", "CartManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+            }
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.UserName)
+            @{ s = "UserName";}
+            @if (ViewBag.Sort == s)
+            {
+                if (ViewBag.Asc)
+                {
+                    @Html.ActionLink("Sort Desc", "CartManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+                else
+                {
+                    @Html.ActionLink("Sort Asc", "CartManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+            }
+            else
+            {
+                @Html.ActionLink("Sort", "CartManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+            }
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Completed)
+            @{ s = "Completed";}
+            @if (ViewBag.Sort == s)
+            {
+                if (ViewBag.Asc)
+                {
+                    @Html.ActionLink("Sort Desc", "CartManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+                else
+                {
+                    @Html.ActionLink("Sort Asc", "CartManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+            }
+            else
+            {
+                @Html.ActionLink("Sort", "CartManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+            }
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PurchaseDate)
+            @{ s = "PurchaseDate";}
+            @if (ViewBag.Sort == s)
+            {
+                if (ViewBag.Asc)
+                {
+                    @Html.ActionLink("Sort Desc", "CartManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+                else
+                {
+                    @Html.ActionLink("Sort Asc", "CartManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+            }
+            else
+            {
+                @Html.ActionLink("Sort", "CartManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+            }
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeliveryDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="h3">
+            <td>
+                @Html.ActionLink(item.CartId + "", "CartDetails", new { id = item.CartId }, new { @style = "text-decoration: none" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.ActionLink(item.Users.UserName, "CustomerDetails", new { id = item.UserId }, new { @style = "text-decoration: none" })
+            </td>
+            <td>
+                @switch (item.Completed)
+                {
+                    case -1:
+                        @:Đã Hủy
+                        break;
+                    case 1:
+                        switch (item.ShipmentProgress)
+                        {
+                            case 0:
+                                @: Đang Chờ Xác Nhận
+                                break;
+                            case 1:
+                                @: Đang Chuyển Hàng
+                                break;
+                            case 2:
+                                @: Đã Chuyển Hàng
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PurchaseDate)
+            </td>
+            <td>
+                @item.DeliveryDate.ToString("dd/MM/yyyy")
+            </td>
+        </tr>
+    }
+
+</table>
+</div>
+
+<div>
+    @Html.Action("_PagingView", "Home", new { page, pageCount, actionName = "CartManager", controllerName = "Mod", sort, asc, mode, q })
+</div>

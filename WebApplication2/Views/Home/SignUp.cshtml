@@ -1,0 +1,93 @@
+﻿@model WebApplication2.Models.User
+
+@{
+    ViewBag.Title = "Signup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*These scripts must be added in order to use Remote Validation for UserName, and add 2 keys in addSettting in web.config *@
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+
+@using (Html.BeginForm("Signup", "Home", FormMethod.Post))
+{
+
+<div class="form-horizontal text-center">
+    <h1>Register</h1>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group pt-4">
+        <div class="row d-flex justify-content-center">
+            <div class="col-1 h3">
+                @Html.LabelFor(model => model.Name) (*)
+            </div>
+            <div class="col-4">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control form-control-lg", @style = "max-width: inherit" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row d-flex justify-content-center">
+            <div class="col-1 h3">
+                @Html.LabelFor(model => model.UserName) (*)
+            </div>
+            <div class="col-4">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control form-control-lg", @style = "max-width: inherit" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row d-flex justify-content-center">
+            <div class="col-1 h3">
+                @Html.LabelFor(model => model.Password) (*)
+            </div>
+            <div class="col-4">
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control form-control-lg", @style = "max-width: inherit"})
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row d-flex justify-content-center">
+            <div class="col-1 h3">
+                @Html.LabelFor(model => model.Email)
+            </div>
+            <div class="col-4">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control form-control-lg", @style = "max-width: inherit", @placeholder ="youremail@gmail.com" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row d-flex justify-content-center">
+            <div class="col-1 h3">
+                @Html.LabelFor(model => model.Address)
+            </div>
+            <div class="col-4">
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control form-control-lg", @style = "max-width: inherit" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row d-flex justify-content-center">
+            <div class="col-1 h3">
+                @Html.LabelFor(model => model.PhoneNumber)
+            </div>
+            <div class="col-4">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control form-control-lg", @style = "max-width: inherit" } })
+                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Sign Up" class="btn btn-success btn-lg" />
+    </div>
+</div>
+}
+
+

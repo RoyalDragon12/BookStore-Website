@@ -1,0 +1,31 @@
+﻿@model WebApplication2.Models.Cart
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var cartId = Model.CartId;
+}
+
+@*These scripts must be added in order to use Remote Validation for Book's Amount, and add 2 keys in addSettting in web.config *@
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+<html>
+    <body>
+        <section id="cart_items">
+            <div class="container">
+                @Html.Action("_CartInfoPartial", "Shop", new { id = cartId })
+            </div>
+        </section>
+        <div class="pt-4 pb-4 text-center">
+            @if (TempData["Error"] != null)
+            {
+            <p class="h2 text-danger">@TempData["Error"].ToString()</p>
+            }
+        </div>
+        <section>
+            @Html.Action("_CartPartial", "Shop", new { id = cartId })
+        </section>
+    </body>
+</html>
+

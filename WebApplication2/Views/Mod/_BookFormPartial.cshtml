@@ -1,0 +1,135 @@
+﻿@model WebApplication2.Models.Book
+
+@{ 
+    string imagePath = "/Images/user_icon.png";
+}
+    <div class="row">
+        <div class="col-4 text-center">
+            <label for="photo">Photo:</label>
+            @if (Model!= null)
+            {
+                imagePath = "/Images/" + Model.BookCode + ".jpg";
+            }
+            <div>
+                <img id="previewImage" src=@imagePath style="max-height:200px;max-width:200px" />
+            </div>
+            <div class="justify-content-center">
+                <input type="file" name="photo" id="photo" style="margin:0 auto" />
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @if (Model != null)
+                {
+                    @Html.HiddenFor(model => model.BookId)
+                }
+                <div class="form-group h3">
+                    @Html.LabelFor(model => model.BookName, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @if(Model != null)
+                    {
+                        <div class="col-md-9">
+                            @Html.HiddenFor(model => model.BookName)
+                            @Html.DisplayFor(model => model.BookName, new { htmlAttributes = new { @class = "form-control h3", @style = "font-size:2rem" } })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.BookName, new { htmlAttributes = new { @class = "form-control h3", @style = "font-size:2rem" } })
+                            @Html.ValidationMessageFor(model => model.BookName, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                </div>
+                <div>
+
+                </div>
+                <div class="form-group h3">
+                    @Html.LabelFor(model => model.BookCode, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @if (Model != null)
+                    {
+                        <div class="col-md-9">
+                            @Html.HiddenFor(model => model.BookCode)
+                            @Html.DisplayFor(model => model.BookCode, new { htmlAttributes = new { @class = "form-control", @style = "font-size:2rem" } })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.BookCode, new { htmlAttributes = new { @class = "form-control", @style = "font-size:2rem" } })
+                            @Html.ValidationMessageFor(model => model.BookCode, "", new { @class = "text-danger" })
+                        </div>
+                    }
+
+                </div>
+
+                <div class="form-group h3">
+                    @Html.LabelFor(model => model.Cost, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "1000", @step = "1000", @style = "font-size:2rem" } })
+                        @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group h3">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @style = "font-size:2rem" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group h3">
+                    @Html.LabelFor(model => model.StorageAmount, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.StorageAmount, new { htmlAttributes = new { @class = "form-control", @style = "font-size:2rem" } })
+                        @Html.ValidationMessageFor(model => model.StorageAmount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group h3">
+                    <label class="control-label col-md-3">Thể Loại: </label>
+                    <div class="row">
+                        @Html.Action("_CreateBookGenrePartial", "Mod")
+                    </div>
+                </div>
+
+                <div class="form-group h3">
+                    @Html.LabelFor(model => model.PublisherId, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownList("PublisherId", null, htmlAttributes: new { @class = "form-control", @style = "font-size:2rem" })
+                        @Html.ValidationMessageFor(model => model.PublisherId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group h3">
+                    @Html.LabelFor(model => model.AuthorId, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownList("AuthorId", null, htmlAttributes: new { @class = "form-control", @style = "font-size:2rem" })
+                        @Html.ValidationMessageFor(model => model.AuthorId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group h3">
+                    @Html.LabelFor(model => model.isHiddenBool, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9 row">
+                        <div class="col-auto">
+                            @Html.CheckBoxFor(model => model.isHiddenBool)
+                        </div>
+                        <div class="col">
+                            <h3>Ẩn</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    photo.onchange = evt => {
+        const [file] = photo.files
+        if (file) {
+            previewImage.src = URL.createObjectURL(file)
+        }
+    }
+</script>

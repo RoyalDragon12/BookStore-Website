@@ -1,0 +1,159 @@
+﻿@model IEnumerable<WebApplication2.Models.User>
+
+@{
+    Layout = "~/Views/Shared/_ModLayout.cshtml";
+    string s = "";
+    string banString = "";
+    string modeName = "";
+    var list = new List<string> { "UserId", "UserName", "Name"};
+    var searchType = new SelectList(list);
+    string sort = ViewBag.Sort;
+    bool asc = ViewBag.Asc;
+    string mode = ViewBag.Mode;
+    string q = ViewBag.Search;
+    string page = ViewBag.Page;
+    int pageCount = ViewBag.PageCount;
+}
+
+<div>
+    @using (Html.BeginForm(new { sort = ViewBag.Sort, asc = ViewBag.Asc, ViewBag.Mode }))
+    {
+        <div class="mb-5 d-flex">
+            <div class="p-2">
+                @switch (ViewBag.Mode)
+                {
+                    case "Available":
+                        modeName = "Không Hiển Thị Tài Khoản Bị Khóa";
+                        mode = "Banned";
+                        break;
+                    case "Banned":
+                        modeName = "Chỉ Hiện Thị Tài Khoản Bị Khóa";
+                        mode = "All";
+                        break;
+                    default:
+                        modeName = "Tất Cả";
+                        mode = "Available";
+                        break;
+                }
+                @Html.ActionLink("Chế Độ: " + modeName, "CustomerManager", new { sort = ViewBag.Sort, asc = ViewBag.Asc, mode, q = ViewBag.Search, searchType = ViewBag.searchType }, new { @class = "btn btn-success", @style = "font-size:2rem" })
+            </div>
+            <div class="ms-auto p-2">
+                @Html.TextBox("q", null, new { @id = "SearchString", @style = "font-size:2rem;height:100%" })
+                @Html.Hidden("q")
+            </div>
+            <div class="p-2">
+                @Html.DropDownList("searchType", searchType, htmlAttributes: new { @style = "font-size:2rem" })
+                @Html.Hidden("searchType")
+            </div>
+            <div class="p-2">
+                <input class="btn btn-success" type="submit" value="Tìm Kiếm" style="font-size:2rem" />
+            </div>
+        </div>
+    }
+
+<table class="table table-hover table-striped table-bordered table-responsive-lg">
+    <tr class="table-light h2">
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+            @{ s = "UserId";}
+            @if (ViewBag.Sort == s)
+            {
+                if (ViewBag.Asc)
+                {
+                    @Html.ActionLink("Sort Desc", "CustomerManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+                else
+                {
+                    @Html.ActionLink("Sort Asc", "CustomerManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+            }
+            else
+            {
+                @Html.ActionLink("Sort", "CustomerManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+            }
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+            @{ s = "UserName";}
+            @if (ViewBag.Sort == s)
+            {
+                if (ViewBag.Asc)
+                {
+                    @Html.ActionLink("Sort Desc", "CustomerManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+                else
+                {
+                    @Html.ActionLink("Sort Asc", "CustomerManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+            }
+            else
+            {
+                @Html.ActionLink("Sort", "CustomerManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+            }
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+            @{ s = "Name";}
+            @if (ViewBag.Sort == s)
+            {
+                if (ViewBag.Asc)
+                {
+                    @Html.ActionLink("Sort Desc", "CustomerManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+                else
+                {
+                    @Html.ActionLink("Sort Asc", "CustomerManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+                }
+            }
+            else
+            {
+                @Html.ActionLink("Sort", "CustomerManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search, searchType = ViewBag.searchType })
+            }
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="h3">
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.ActionLink(item.UserName, "CustomerDetails", new { id = item.UserId }, new { @style = "text-decoration: none" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @if (item.isBannedBool)
+                {
+                    banString = "Unban";
+                }
+                else
+                {
+                    banString = "Ban";
+                }
+                @Html.ActionLink(banString, "BanCustomer", new { id = item.UserId })
+            </td>
+        </tr>
+    }
+
+</table>
+</div>
+
+<div>
+    @Html.Action("_PagingView", "Home", new { page, pageCount, actionName = "CustomerManager", controllerName = "Mod", sort, asc, mode, q })
+</div>

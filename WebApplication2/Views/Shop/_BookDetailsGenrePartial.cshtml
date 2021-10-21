@@ -1,0 +1,15 @@
+﻿@using WebApplication2.Models;
+@model IEnumerable<Genre>
+
+@for (int i = 0; i < Model.Count(); i++)
+{
+    if(i < (Model.Count() - 1))
+    {
+        string a = String.Concat( Model.ElementAt(i).GenreName.ToString(), ", ");
+        @a;
+    }
+    else
+    {
+        @Model.ElementAt(i).GenreName;
+    }
+}

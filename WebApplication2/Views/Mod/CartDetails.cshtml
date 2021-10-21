@@ -1,0 +1,205 @@
+﻿@model WebApplication2.Models.Cart
+
+@{
+    ViewBag.Title = "CartDetails";
+    Layout = "~/Views/Shared/_ModLayout.cshtml";
+    var cartProgress = "";
+    switch (Model.Completed)
+    {
+        case -1:
+            cartProgress = "Đã Hủy";
+            break;
+        case 1:
+            switch (Model.ShipmentProgress)
+            {
+                default:
+                    cartProgress = "Đang tiếp nhận đơn hàng";
+                    break;
+                case 1:
+                    cartProgress = "Đang giao hàng";
+                    break;
+                case 2:
+                    cartProgress = "Đã giao hàng";
+                    break;
+            }
+            break;
+        default:
+            cartProgress = "Đơn Hàng Bị Lỗi";
+            break;
+
+    }
+    var FinalCost = Model.ShippingCost + Model.TotalCost;
+}
+
+<div class="d-flex">
+    <div class="p-2">
+        @Html.ActionLink("Quay Về Trang Quản Lý", "CartManager", null, new { @class = "btn btn-success", @style = "font-size:2rem" })
+    </div>
+</div>
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+<div>
+    <div class="row text-center">
+        <h1>Thông Tin Giỏ Hàng</h1>
+    </div>
+    <div class="row fs-2 mt-4 ms-5 pb-5">
+        <div class="col-5 fw-bold text-end">
+            <div class="col">
+                @Html.DisplayNameFor(itemModel => itemModel.Users.UserName)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(itemModel => itemModel.Users.Name)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(itemModel => itemModel.Completed)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(itemModel => itemModel.PurchaseDate)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(itemModel => itemModel.DeliveryDate)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(itemModel => itemModel.ShippingAddress)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(itemModel => itemModel.Paid)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(itemModel => itemModel.TotalCost)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(itemModel => itemModel.ShippingCost)
+            </div>
+            <div class="col">
+                Tổng Tiền
+            </div>
+        </div>
+        <div class="col-6 ms-3">
+            <div class="col">
+                @Html.HiddenFor(itemModel => Model.CartId)
+                @Html.ActionLink(Model.Users.UserName.ToString(), "CustomerDetails", new { id = Model.UserId })
+            </div>
+            <div class="col">
+                @Html.DisplayFor(itemModel => Model.Users.Name)
+            </div>
+            <div class="col">
+                @cartProgress
+            </div>
+            <div class="col">
+                @Html.DisplayFor(itemModel => Model.PurchaseDate)
+            </div>
+            <div class="col">
+                @if (Model.Completed != -1)
+                {
+                    if (Model.ShipmentProgress == 2)
+                    {
+                        @Model.DeliveryDate.ToString("dd/MM/yyyy")
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(itemModel => itemModel.DeliveryDate, new { @Value = Model.DeliveryDate.ToString("dd/MM/yyyy") })
+                    }
+                }
+            </div>
+            <div class="col">
+                @Html.DisplayFor(itemModel => Model.ShippingAddress)
+            </div>
+            <div class="col">
+                @if (Model.Paid != 0)
+                {
+                    @:Trả Trước
+                }
+                else
+                {
+                    @:Trả Sau
+                }
+            </div>
+            <div class="col">
+                @Html.DisplayFor(itemModel => itemModel.TotalCost)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(itemModel => itemModel.ShippingCost)
+            </div>
+            <div class="col">
+                @FinalCost
+            </div>
+        </div>
+    </div>
+    <div>
+        <section id="cart_items">
+            @Html.Action("_ModCartInfoPartial", "Mod", new { id = Model.CartId })
+        </section>
+    </div>
+
+    <div class="pt-5">
+        <div class="row">
+            <div class="col-auto">
+                <p class="h2 fw-bold">Tình Trạng Đơn Hàng:</p> 
+            </div>
+            <div class="col">
+                <p class="h2">@cartProgress</p>
+            </div>
+        </div>
+    </div>
+    @if(TempData["ErrorMessage"] != null)
+    {
+        <div class="pt-2">
+            <div class="col">
+                <p class="h2 fw-bold text-danger">Lỗi: @TempData["ErrorMessage"].ToString()</p>
+            </div>
+        </div>
+    }
+    <div class="pt-3">
+        <div class="col">
+            <p class="h2 fw-bold">Ghi Chú:</p>
+        </div>
+        @if (Model.Completed != -1)
+        {
+            switch (Model.ShipmentProgress)
+            {
+                case 0:
+                    <div class="col">
+                        @Html.TextAreaFor(model => Model.CartNote, new { @class = "form-control", @rows = 3, @style = "font-size: 1.5rem; min-width: 100%" })
+                    </div>
+                    <div class="row mt-3 h2">
+                        <div class="col-6 text-end">
+                            <input type="submit" name="ApproveCart" value="Xác Nhận Đơn Hàng" formaction="~/Mod/ApproveCart" class="btn btn-success btn-lg" />
+                        </div>
+                        <div class="col-6">
+                            <input type="submit" name="DeclineCart" value="Hủy Bỏ Đơn Hàng" formaction="~/Mod/DeclineCart" class="btn btn-danger btn-lg" />
+                        </div>
+                    </div>
+                    break;
+                case 1:
+                    <div class="col">
+                        @Html.TextAreaFor(model => Model.CartNote, new { @class = "form-control", @rows = 3, @style = "font-size: 1.5rem; min-width: 100%" })
+                    </div>
+                    <div class="row mt-3 h2">
+                        <div class="col-5 text-end">
+                            <input type="submit" name="FinalizeCart" value="Xác Nhận Đã Giao Đơn Hàng" formaction="~/Mod/FinalizeCart" class="btn btn-success btn-lg" />
+                        </div>
+                        <div class="col">
+                            <input type="submit" name="UpdateCart" value="Cập Nhật Đơn Hàng" formaction="~/Mod/UpdateCart" class="btn btn-success btn-lg" />
+                            <input type="submit" name="DeclineCart" value="Hủy Bỏ Đơn Hàng" formaction="~/Mod/DeclineCart" class="btn btn-danger btn-lg" />
+                        </div>
+                    </div>
+                    break;
+                default:
+                    <div class="col">
+                        @Html.TextAreaFor(model => Model.CartNote, new { @class = "form-control", @readonly = "readonly", @style = "font-size: 1.5rem; min-width: 100%" })
+                    </div>
+                    break;
+            }
+        }
+        else
+        {
+            <div class="col">
+                @Html.TextAreaFor(model => Model.CartNote, new { @class = "form-control", @readonly = "readonly", @rows = 3, @style = "font-size: 1.5rem; min-width: 100%" })
+            </div>
+        }
+    </div>
+</div>
+}
+

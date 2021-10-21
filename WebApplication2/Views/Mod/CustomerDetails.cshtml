@@ -1,0 +1,87 @@
+﻿@model WebApplication2.Models.User
+
+
+@{
+    Layout = "~/Views/Shared/_ModLayout.cshtml";
+    string banString = "";
+}
+
+<div class="d-flex">
+    <div class="p-2">
+        @Html.ActionLink("Quay Về Trang Quản Lý", "CustomerManager", null, new { @class = "btn btn-success", @style = "font-size:2rem" })
+    </div>
+    <div class="ms-auto p-2">
+        @Html.ActionLink("Tìm Toàn Bộ Đơn Hàng Từ Khách Hàng", "CartManager", new { sort = "CartId", mode = "All", q = Model.UserId, searchType = "UserId" }, new { @class = "btn btn-success", @style = "font-size:2rem" })
+    </div>
+</div>
+<div class="mt-5">
+    <div class="row text-center">
+        <h1>Thông Tin Tài Khoản Khách Hàng</h1>
+    </div>
+    <div class="row fs-2 mt-4 ms-5 pb-5">
+        <div class="col-5 fw-bold text-end">
+            <div class="col">
+                @Html.DisplayNameFor(modelItem => Model.UserId)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(modelItem => Model.UserName)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(modelItem => Model.Name)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(modelItem => Model.Email)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(modelItem => Model.Address)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(modelItem => Model.PhoneNumber)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(modelItem => Model.isBanned)
+            </div>
+        </div>
+        <div class="col-6 ms-3">
+            <div class="col">
+                @Html.DisplayFor(modelItem => Model.UserId)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(modelItem => Model.UserName)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(modelItem => Model.Name)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(modelItem => Model.Name)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(modelItem => Model.Email)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(modelItem => Model.Address)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(modelItem => Model.PhoneNumber)
+            </div>
+            <div class="col">
+                @if (Model.isBannedBool)
+                {
+                    @:Đã Khóa
+                    banString = "Mở Khóa Tài Khoản";
+
+                }
+                else
+                {
+                    @:Bình Thường
+                    banString = "Khóa Tài Khoản";
+                }
+                @Html.ActionLink(banString, "BanCustomer", new { id = Model.UserId }, new { @class = "btn btn-success", @style = "font-size:1.5rem" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5">
+    @Html.Action("_CustomerDetailsCartPartial", new { id = Model.UserId })
+</div>

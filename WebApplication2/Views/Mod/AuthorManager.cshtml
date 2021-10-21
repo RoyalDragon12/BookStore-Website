@@ -1,0 +1,88 @@
+﻿@model IEnumerable<WebApplication2.ViewModel.AuthorBookCountViewModel>
+
+@{
+    Layout = "~/Views/Shared/_ModLayout.cshtml";
+    string s = "";
+    string sort = ViewBag.Sort;
+    bool asc = ViewBag.Asc;
+    string mode = ViewBag.Mode;
+    string q = ViewBag.Search;
+    string page = ViewBag.Page;
+    int pageCount = ViewBag.PageCount;
+}
+
+@Html.Partial("_ManagerToolbarsPartial")
+
+<div>
+    <table class="table table-hover table-striped table-bordered table-responsive-lg">
+        <tr class="table-light h2">
+            <th>
+                @Html.DisplayNameFor(model => model.Author.AuthorName)
+                @{ s = "AuthorName";}
+                @if (ViewBag.Sort == s)
+                {
+                    if (ViewBag.Asc)
+                    {
+                        @Html.ActionLink("Sort Desc", "AuthorManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Sort Asc", "AuthorManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search })
+                    }
+                }
+                else
+                {
+                    @Html.ActionLink("Sort", "AuthorManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search })
+                }
+            </th>
+            <th>
+                Số Lượng Sách
+                @{ s = "BookCount";}
+                @if (ViewBag.Sort == s)
+                {
+                    if (ViewBag.Asc)
+                    {
+                        @Html.ActionLink("Sort Desc", "AuthorManager", new { sort = s, asc = false, ViewBag.Mode, q = ViewBag.Search })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Sort Asc", "AuthorManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search })
+                    }
+                }
+                else
+                {
+                    @Html.ActionLink("Sort", "AuthorManager", new { sort = s, asc = true, ViewBag.Mode, q = ViewBag.Search })
+                }
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="h3">
+                <td>
+                    @Html.ActionLink(item.Author.AuthorName, "EditAuthor", new { id = item.Author.AuthorId }, new { @style = "text-decoration: none" })
+                </td>
+                <td>
+                    @item.bookCount
+                </td>
+                <td>
+                    @Html.ActionLink("Search", "BookManager", new { q = item.Author.AuthorName, searchType = ViewBag.DataType }) |
+                    @if (item.Author.isHiddenBool)
+                    {
+                        @Html.ActionLink("Unhide", "HideAuthor", new { id = item.Author.AuthorId })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Hide", "HideAuthor", new { id = item.Author.AuthorId })
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<div>
+    @Html.Action("_PagingView", "Home", new { page, pageCount, actionName = "AuthorManager", controllerName = "Mod", sort, asc, mode, q })
+</div>
