@@ -7,7 +7,7 @@ using WebApplication2.ModelsAction;
 
 namespace WebApplication2.Models
 {
-    public class DBInitializer : System.Data.Entity.DropCreateDatabaseAlways<DBContext>
+    public class DBInitializer : System.Data.Entity.CreateDatabaseIfNotExists<DBContext>
     {
         protected override void Seed(DBContext db)
         {
