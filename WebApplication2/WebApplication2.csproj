@@ -139,11 +139,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202110291009508_InitialCreate.cs" />
-    <Compile Include="Migrations\202110291009508_InitialCreate.designer.cs">
-      <DependentUpon>202110291009508_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsAction\CartAction.cs" />
     <Compile Include="ModelsAction\ModAction.cs" />
     <Compile Include="ModelsAction\UserAction.cs" />
@@ -369,6 +364,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\HinhAnhLogin\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -376,11 +372,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202110291009508_InitialCreate.resx">
-      <DependentUpon>202110291009508_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

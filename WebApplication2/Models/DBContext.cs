@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using System.Configuration;
 
 namespace WebApplication2.Models
 {
@@ -11,7 +12,9 @@ namespace WebApplication2.Models
         public DBContext() : base()
         {
             string database_name = "QuanLyBanSach";
-            Database.Connection.ConnectionString = "Data Source=(local);Initial Catalog=" + database_name + ";Trusted_Connection=Yes";
+            Database.Connection.ConnectionString = "workstation id=QuanLyBanSach.mssql.somee.com;Data Source=QuanLyBanSach.mssql.somee.com;" +
+                "user id=royaldragon12_SQLLogin_1;pwd=3kck87gj58;persist security info=False;Initial Catalog=" + database_name + ";Integrated Security = False";
+            //Database.Connection.ConnectionString = "Data Source=(local);Initial Catalog=" + database_name + ";Trusted_Connection = True";
         }
 
         public DbSet<CartInfo> CartInfos { get; set; }
