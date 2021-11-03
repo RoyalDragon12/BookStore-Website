@@ -101,7 +101,7 @@ namespace WebApplication2.Controllers
         {
             if (TryUpdateModel(user))
             {
-                if (UserAction.CreateUser(user))
+                if (UserAction.CreateUser(user,"Customer"))
                 {
                     Login(user.UserName, user.Password);
                     return Redirect("~/Home/Index");

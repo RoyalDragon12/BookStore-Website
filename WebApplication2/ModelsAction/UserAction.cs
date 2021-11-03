@@ -6,7 +6,7 @@ namespace WebApplication2.ModelsAction
 {
     public class UserAction
     {
-        public static bool CreateUser(User user)
+        public static bool CreateUser(User user, string userRoles)
         {
             using(var db = new DBContext())
             {
@@ -18,6 +18,7 @@ namespace WebApplication2.ModelsAction
                 }
                 else
                 {
+                    user.Roles = userRoles;
                     db.Users.Add(user);
                     db.SaveChanges();
                     db.Dispose();
